@@ -6,7 +6,7 @@ using BookAway.Infrastructure.Context;
 
 namespace BookAway.Infrastructure.Repositories.Generic
 {
-    public class UnityOfWork : IUnityOfWork
+    public class UnityOfWork : IUnityOfWork, IDisposable
     {
         public readonly BookAwayContext _context;
 
