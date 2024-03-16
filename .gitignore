@@ -1,0 +1,48 @@
+# Archivos y carpetas de Visual Studio
+.vs/
+*.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.user
+*.unityproj
+*.old
+*.bak
+
+# Carpeta de archivos binarios generados
+[Bb]in/
+[Oo]bj/
+
+BookAway/bin
+
+# Carpeta de paquetes NuGet
+*.nuget/
+
+# Archivos de compilación de .NET Core
+*.dll
+*.exe
+*.pdb
+*.dll.config
+*.json
+
+# Carpetas y archivos de resultados de pruebas
+testResults/
+[Tt]est[Aa]rtifacts/
+
+# Otros archivos generados automáticamente
+_ReSharper*/
+*.[Rr]e[Ss]harper
+[Tt]humbs.db
+*.log
+*.vsix
+
+# Archivos de usuario y configuración
+*.suo
+*.user
+*.sln.docstates
+
+# Archivos de caché y de compilación local
+*.log
+*.userprefs

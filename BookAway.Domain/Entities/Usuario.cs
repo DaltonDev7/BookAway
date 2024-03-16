@@ -10,7 +10,8 @@ namespace BookAway.Domain.Entities
         public string Apellidos { get; set; } = null!;
         public int IdSexo { get; set; }
         public string Identificacion { get; set; } = null!;
-
         public bool Estado { get; set; }
+
+        public ICollection<RolUsuario> RolesUsuarios { get; set; } = null!;
     }
 }
