@@ -67,6 +67,29 @@ namespace BookAway.Infrastructure.Migrations
                     b.ToTable("RolesUsuario", (string)null);
                 });
 
+            modelBuilder.Entity("BookAway.Domain.Entities.Sexo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaModificacion")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sexo", (string)null);
+                });
+
             modelBuilder.Entity("BookAway.Domain.Entities.Usuario", b =>
                 {
                     b.Property<int>("Id")
@@ -80,7 +103,8 @@ namespace BookAway.Infrastructure.Migrations
 
                     b.Property<string>("Apellidos")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -96,12 +120,18 @@ namespace BookAway.Infrastructure.Migrations
                     b.Property<bool>("Estado")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("IdSexo")
                         .HasColumnType("int");
 
                     b.Property<string>("Identificacion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -111,7 +141,8 @@ namespace BookAway.Infrastructure.Migrations
 
                     b.Property<string>("Nombres")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -142,6 +173,11 @@ namespace BookAway.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdSexo");
+
+                    b.HasIndex("Identificacion")
+                        .IsUnique();
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -150,7 +186,7 @@ namespace BookAway.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("Usuarios", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -260,6 +296,17 @@ namespace BookAway.Infrastructure.Migrations
                     b.Navigation("Usuario");
                 });
 
+            modelBuilder.Entity("BookAway.Domain.Entities.Usuario", b =>
+                {
+                    b.HasOne("BookAway.Domain.Entities.Sexo", "Sexo")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("IdSexo")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Sexo");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("BookAway.Domain.Entities.Rol", null)
@@ -299,6 +346,11 @@ namespace BookAway.Infrastructure.Migrations
             modelBuilder.Entity("BookAway.Domain.Entities.Rol", b =>
                 {
                     b.Navigation("RolesUsuarios");
+                });
+
+            modelBuilder.Entity("BookAway.Domain.Entities.Sexo", b =>
+                {
+                    b.Navigation("Usuarios");
                 });
 
             modelBuilder.Entity("BookAway.Domain.Entities.Usuario", b =>

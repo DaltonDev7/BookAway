@@ -19,10 +19,13 @@ namespace BookAway.Infrastructure.Context
             base.OnModelCreating(builder);
 
             builder.ApplyConfiguration(new RolUsuarioConfiguration());
+            builder.ApplyConfiguration(new UsuarioConfiguration());
+            builder.ApplyConfiguration(new SexoConfiguration());
         }
 
 
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Sexo> Sexo { get; set; }
         public DbSet<Rol> Rol { get; set; }
         public DbSet<RolUsuario> RolUsuario { get; set; }
 

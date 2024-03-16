@@ -12,6 +12,10 @@ namespace BookAway.Domain.Entities
         public string Identificacion { get; set; } = null!;
         public bool Estado { get; set; }
 
+        public DateTime FechaCreacion { get; set; } = DateTime.Now;
+        public DateTime? FechaModificacion { get; set; }
+
         public ICollection<RolUsuario> RolesUsuarios { get; set; } = null!;
+        public Sexo Sexo { get; set; } = null!;
     }
 }

@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BookAway.Domain\BookAway.Domain.csproj" />
+    <ProjectReference Include="..\BookAway.Application\BookAway.Application.csproj" />
     <ProjectReference Include="..\BookAway.Infrastructure\BookAway.Infrastructure.csproj" />
   </ItemGroup>
 

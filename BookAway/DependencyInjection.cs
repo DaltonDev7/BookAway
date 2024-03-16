@@ -1,5 +1,9 @@
-﻿using BookAway.Domain.Entities;
+﻿using BookAway.Application.Interfaces;
+using BookAway.Application.Interfaces.Generic;
+using BookAway.Application.Services;
+using BookAway.Domain.Entities;
 using BookAway.Infrastructure.Context;
+using BookAway.Infrastructure.Repositories.Generic;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +20,11 @@ namespace BookAway
             var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             services.AddDbContext<BookAwayContext>(db => db.UseSqlServer(connectionString));
 
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddTransient<IUnityOfWork, UnityOfWork>();
+
+            //services
+            services.AddScoped<IRoleServices, RoleServices>();
 
             //add identity
             services.AddIdentity<Usuario, Rol>( options =>
@@ -50,10 +59,6 @@ namespace BookAway
                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]))
                };
            });
-
-
-
-
 
 
             return services;
