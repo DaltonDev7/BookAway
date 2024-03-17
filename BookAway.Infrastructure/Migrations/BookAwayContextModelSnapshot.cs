@@ -22,6 +22,158 @@ namespace BookAway.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BookAway.Domain.Entities.Ciudad", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Estado")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdProvincia")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdProvincia");
+
+                    b.ToTable("Ciudades", (string)null);
+                });
+
+            modelBuilder.Entity("BookAway.Domain.Entities.Hotel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("CalificacionPromedio")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("CiudadId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Estado")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdPais")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdProvincia")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PassWord")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RNC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefono")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CiudadId");
+
+                    b.HasIndex("IdPais");
+
+                    b.HasIndex("IdProvincia");
+
+                    b.ToTable("Hoteles", (string)null);
+                });
+
+            modelBuilder.Entity("BookAway.Domain.Entities.Pais", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Estado")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Paises", (string)null);
+                });
+
+            modelBuilder.Entity("BookAway.Domain.Entities.Provincia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Estado")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdPais")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdPais");
+
+                    b.ToTable("Provincias", (string)null);
+                });
+
             modelBuilder.Entity("BookAway.Domain.Entities.Rol", b =>
                 {
                     b.Property<int>("Id")
@@ -78,6 +230,9 @@ namespace BookAway.Infrastructure.Migrations
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Estado")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
@@ -277,6 +432,50 @@ namespace BookAway.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("BookAway.Domain.Entities.Ciudad", b =>
+                {
+                    b.HasOne("BookAway.Domain.Entities.Provincia", "Provincia")
+                        .WithMany("Ciudades")
+                        .HasForeignKey("IdProvincia")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Provincia");
+                });
+
+            modelBuilder.Entity("BookAway.Domain.Entities.Hotel", b =>
+                {
+                    b.HasOne("BookAway.Domain.Entities.Ciudad", null)
+                        .WithMany("Hoteles")
+                        .HasForeignKey("CiudadId");
+
+                    b.HasOne("BookAway.Domain.Entities.Pais", "Pais")
+                        .WithMany("Hoteles")
+                        .HasForeignKey("IdPais")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("BookAway.Domain.Entities.Provincia", "Provincia")
+                        .WithMany("Hoteles")
+                        .HasForeignKey("IdProvincia")
+                        .OnDelete(DeleteBehavior.ClientCascade);
+
+                    b.Navigation("Pais");
+
+                    b.Navigation("Provincia");
+                });
+
+            modelBuilder.Entity("BookAway.Domain.Entities.Provincia", b =>
+                {
+                    b.HasOne("BookAway.Domain.Entities.Pais", "Pais")
+                        .WithMany("Provincias")
+                        .HasForeignKey("IdPais")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Pais");
+                });
+
             modelBuilder.Entity("BookAway.Domain.Entities.RolUsuario", b =>
                 {
                     b.HasOne("BookAway.Domain.Entities.Rol", "Rol")
@@ -341,6 +540,25 @@ namespace BookAway.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BookAway.Domain.Entities.Ciudad", b =>
+                {
+                    b.Navigation("Hoteles");
+                });
+
+            modelBuilder.Entity("BookAway.Domain.Entities.Pais", b =>
+                {
+                    b.Navigation("Hoteles");
+
+                    b.Navigation("Provincias");
+                });
+
+            modelBuilder.Entity("BookAway.Domain.Entities.Provincia", b =>
+                {
+                    b.Navigation("Ciudades");
+
+                    b.Navigation("Hoteles");
                 });
 
             modelBuilder.Entity("BookAway.Domain.Entities.Rol", b =>

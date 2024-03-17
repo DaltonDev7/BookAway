@@ -143,3 +143,5 @@ C:\Dalton Archivos\Asp Proyectos\BookAway\BookAway\BookAway\bin\Debug\net8.0\Boo
 C:\Dalton Archivos\Asp Proyectos\BookAway\BookAway\BookAway\bin\Debug\net8.0\BookAway.Domain.pdb
 C:\Dalton Archivos\Asp Proyectos\BookAway\BookAway\BookAway\bin\Debug\net8.0\BookAway.Application.pdb
 C:\Dalton Archivos\Asp Proyectos\BookAway\BookAway\BookAway\bin\Debug\net8.0\BookAway.Infrastructure.pdb
+C:\Dalton Archivos\Asp Proyectos\BookAway\BookAway\BookAway\bin\Debug\net8.0\AutoMapper.dll
+C:\Dalton Archivos\Asp Proyectos\BookAway\BookAway\BookAway\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

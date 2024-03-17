@@ -23,8 +23,10 @@ namespace BookAway
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IUnityOfWork, UnityOfWork>();
 
+
             //services
             services.AddScoped<IRoleServices, RoleServices>();
+            services.AddScoped<IHotelServices, HotelServices>();
 
             //add identity
             services.AddIdentity<Usuario, Rol>( options =>

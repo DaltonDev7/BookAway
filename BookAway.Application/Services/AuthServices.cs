@@ -22,9 +22,9 @@ namespace BookAway.Application.Services
             _tokenServices = tokenServices;
         }
 
-        public async Task<SignInResponseDto> SignIn(SignUpDto payload)
+        public async Task<SignInResponseDto> SignIn(SignInDto payload)
         {
-            //verificamos el usuario existe
+            //verificamos el usuario si existe
             var user = await _userManager.FindByEmailAsync(payload.Email);
             if (user == null) throw new ApiException("Este usuario no existe", (int)HttpStatusCode.NotFound);
 

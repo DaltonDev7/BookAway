@@ -21,9 +21,17 @@ namespace BookAway.Infrastructure.Context
             builder.ApplyConfiguration(new RolUsuarioConfiguration());
             builder.ApplyConfiguration(new UsuarioConfiguration());
             builder.ApplyConfiguration(new SexoConfiguration());
+            builder.ApplyConfiguration(new PaisConfiguration());
+            builder.ApplyConfiguration(new CiudadConfiguration());
+            builder.ApplyConfiguration(new ProvinciaConfiguration());
+            builder.ApplyConfiguration(new HotelConfiguration());
         }
 
 
+        public DbSet<Provincia> Provincia { get; set; }
+        public DbSet<Ciudad> Ciudad { get; set; }
+        public DbSet<Hotel> Hotel { get; set; }
+        public DbSet<Pais> Pais { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Sexo> Sexo { get; set; }
         public DbSet<Rol> Rol { get; set; }

@@ -14,9 +14,21 @@ namespace BookAway.Infrastructure.Repositories.Generic
         {
             _context = context;
             sexoRepository = new SexoRepository(_context);
+            CiudadRepository = new CiudadRepository(_context);
+            HotelRepository = new HotelRepository(_context);
+            PaisRepository = new PaisRepository(_context);
+            ProvinciaRepository = new ProvinciaRepository(_context);
         }
 
         public ISexoRepository sexoRepository { get; }
+
+        public IHotelRepository HotelRepository { get; }
+
+        public IPaisRepository PaisRepository { get; }
+
+        public ICiudadRepository CiudadRepository { get; }
+
+        public IProvinciaRepository ProvinciaRepository { get; }
 
         public int Complete()
         {

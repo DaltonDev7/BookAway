@@ -25,6 +25,14 @@ namespace BookAway.Controllers
             return Ok(new ApiResponseDto<SignUpResponseDto>(response));
         }
 
+        [HttpPost]
+        [Route("SignIn")]
+        public async Task<IActionResult> SignIn(SignInDto signInDto)
+        {
+            var response = await _authenticationService.SignIn(signInDto);
+            return Ok(new ApiResponseDto<SignInResponseDto>(response));
+        }
+
 
     }
 }

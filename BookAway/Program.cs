@@ -1,6 +1,8 @@
 using BookAway;
+using BookAway.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+var _corsPolicyName = "DefaultPolicy";
 
 // Add services to the container.
 builder.Services.AddDependencyInjection(builder.Configuration);
@@ -11,7 +13,20 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 
+//cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(_corsPolicyName,
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+        });
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -28,6 +43,8 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseAuthentication();
+
+app.UseMiddleware<ErrorHandleMiddleware>();
 
 app.MapControllers();
 
