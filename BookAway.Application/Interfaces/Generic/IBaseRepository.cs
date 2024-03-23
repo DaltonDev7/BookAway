@@ -6,20 +6,10 @@ namespace BookAway.Application.Interfaces.Generic
 {
     public interface IBaseRepository<TEntity>
     {
-        TEntity Get(Expression<Func<TEntity, bool>> predicate);
-        TEntity Get(int id);
-        IEnumerable<TEntity> GetAll();
-        IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate);
-
-        Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate);
-        Task<TEntity> GetAsync(int id);
-
-        void Add(TEntity entity);
-        void AddAll(IEnumerable<TEntity> entities);
-
-        void Remove(TEntity entity);
-        void RemoveAll(IEnumerable<TEntity> entities);
-
+        Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>> filter = null, string includeProperties = "", int? take = null, int? skip = null);
+        Task<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, string includeProperties = "");
+        Task Insert(TEntity entity);
         void Update(TEntity entity);
+        Task Delete(int Id);
     }
 }

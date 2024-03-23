@@ -1,6 +1,6 @@
 ﻿using BookAway.Application.Dtos;
 using BookAway.Application.Dtos.Provincia;
-using BookAway.Application.Interfaces.Generic;
+using BookAway.Application.Interfaces.Services;
 using BookAway.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,33 +10,25 @@ namespace BookAway.Controllers
     [ApiController]
     public class ProvinciaController : ControllerBase
     {
-        private readonly IUnityOfWork _unityOfWork;
+     
+        private readonly IProvinciaServices _provinciaServices;
 
-        public ProvinciaController(IUnityOfWork unityOfWork)
+        public ProvinciaController(IProvinciaServices provinciaServices)
         {
-            _unityOfWork = unityOfWork;
+            _provinciaServices = provinciaServices;
         }
 
         [HttpPost]
-        public IActionResult Create(AddProvinciaDto data)
+        public async Task<IActionResult> Create(AddProvinciaDto data)
         {
-            var provincia = new Provincia
-            {
-                Descripcion = data.Descripcion,
-                IdPais = data.IdPais,
-            };
-
-            _unityOfWork.ProvinciaRepository.Add(provincia);
-            _unityOfWork.Complete();
-
-            return Ok(new ApiResponseDto<string>("Provincia creado correctamente"));
+            return Ok(await _provinciaServices.Create(data));
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAll()
         {
-            var response = _unityOfWork.ProvinciaRepository.GetAll();
-            return Ok(new ApiResponseDto<IEnumerable<Provincia>>(response));
+           var response = await _provinciaServices.GetAll();
+           return Ok(new ApiResponseDto<List<Provincia>>(response));
         }
 
 

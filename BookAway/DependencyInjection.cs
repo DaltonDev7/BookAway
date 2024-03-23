@@ -1,8 +1,10 @@
-﻿using BookAway.Application.Interfaces;
-using BookAway.Application.Interfaces.Generic;
+﻿using BookAway.Application.Interfaces.Generic;
+using BookAway.Application.Interfaces.Repositories;
+using BookAway.Application.Interfaces.Services;
 using BookAway.Application.Services;
 using BookAway.Domain.Entities;
 using BookAway.Infrastructure.Context;
+using BookAway.Infrastructure.Repositories;
 using BookAway.Infrastructure.Repositories.Generic;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -26,7 +28,16 @@ namespace BookAway
 
             //services
             services.AddScoped<IRoleServices, RoleServices>();
+            services.AddScoped<ITokenServices, TokenServices>();
+            services.AddScoped<IAuthServices, AuthServices>();
             services.AddScoped<IHotelServices, HotelServices>();
+            services.AddScoped<ICiudadServices, CiudadServices>();
+            services.AddScoped<IPaisServices, PaisServices>();
+            services.AddScoped<IProvinciaServices, ProvinciaServices>();
+            services.AddScoped<ISexoServices, SexoServices>();
+
+            //repository
+            services.AddScoped<IHotelRepository, HotelRepository>();
 
             //add identity
             services.AddIdentity<Usuario, Rol>( options =>

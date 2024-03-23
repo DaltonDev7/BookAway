@@ -1,5 +1,5 @@
 ﻿using BookAway.Application.Dtos;
-using BookAway.Application.Interfaces;
+using BookAway.Application.Interfaces.Services;
 using BookAway.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 

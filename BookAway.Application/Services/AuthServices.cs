@@ -1,11 +1,11 @@
 ﻿using BookAway.Application.Dtos.Auth;
 using BookAway.Application.Exception;
-using BookAway.Application.Interfaces;
 using BookAway.Domain.Constants;
 using BookAway.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Net;
 using Microsoft.Extensions.Configuration;
+using BookAway.Application.Interfaces.Services;
 
 namespace BookAway.Application.Services
 {

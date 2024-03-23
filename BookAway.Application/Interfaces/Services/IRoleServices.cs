@@ -1,8 +1,7 @@
-﻿
-using BookAway.Application.Dtos;
+﻿using BookAway.Application.Dtos;
 using BookAway.Domain.Entities;
 
-namespace BookAway.Application.Interfaces
+namespace BookAway.Application.Interfaces.Services
 {
     public interface IRoleServices
     {

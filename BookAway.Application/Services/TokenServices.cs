@@ -1,6 +1,4 @@
-﻿
-
-using BookAway.Application.Interfaces;
+﻿using BookAway.Application.Interfaces.Services;
 using BookAway.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;

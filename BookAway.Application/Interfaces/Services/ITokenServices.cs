@@ -1,8 +1,6 @@
-﻿
+﻿using BookAway.Domain.Entities;
 
-using BookAway.Domain.Entities;
-
-namespace BookAway.Application.Interfaces
+namespace BookAway.Application.Interfaces.Services
 {
     public interface ITokenServices
     {

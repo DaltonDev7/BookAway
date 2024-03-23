@@ -1,6 +1,6 @@
 ﻿using BookAway.Application.Dtos.Auth;
 
-namespace BookAway.Application.Interfaces
+namespace BookAway.Application.Interfaces.Services
 {
     public interface IAuthServices
     {

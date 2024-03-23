@@ -1,7 +1,6 @@
-﻿
-using BookAway.Application.Dtos;
+﻿using BookAway.Application.Dtos;
 using BookAway.Application.Dtos.Sexo;
-using BookAway.Application.Interfaces.Generic;
+using BookAway.Application.Interfaces.Services;
 using BookAway.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,33 +10,24 @@ namespace BookAway.Controllers
     [ApiController]
     public class SexoController : ControllerBase
     {
-        private readonly IUnityOfWork _unityOfWork;
+        private readonly ISexoServices _services;
 
-        public SexoController(IUnityOfWork unityOfWork)
+        public SexoController(ISexoServices services)
         {
-            _unityOfWork = unityOfWork;
+            _services = services;
         }
 
         [HttpPost]
-        public IActionResult Create(AddSexoDto data)
+        public async Task<IActionResult> Create(AddSexoDto data)
         {
-            var sexo = new Sexo
-            {
-                Descripcion = data.Descripcion,
-                FechaCreacion = DateTime.Now,
-            };
-
-            _unityOfWork.sexoRepository.Add(sexo);
-            _unityOfWork.Complete();
-
-            return Ok(new ApiResponseDto<string>("Sexo creado correctamente"));
+            return Ok(await _services.Create(data));
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAll()
         {
-            var response =  _unityOfWork.sexoRepository.GetAll();
-            return Ok(new ApiResponseDto<IEnumerable<Sexo>>(response));
+            var response = await _services.GetAll();
+            return Ok(new ApiResponseDto<List<Sexo>>(response));
         }
 
 

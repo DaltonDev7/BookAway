@@ -1,7 +1,7 @@
 ﻿
 using BookAway.Application.Dtos;
 using BookAway.Application.Dtos.Auth;
-using BookAway.Application.Interfaces;
+using BookAway.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookAway.Controllers

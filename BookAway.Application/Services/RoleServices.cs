@@ -1,7 +1,7 @@
 ﻿
 using BookAway.Application.Dtos;
 using BookAway.Application.Exception;
-using BookAway.Application.Interfaces;
+using BookAway.Application.Interfaces.Services;
 using BookAway.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

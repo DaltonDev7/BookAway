@@ -1,7 +1,9 @@
-﻿using BookAway.Application.Dtos;
+﻿using Azure;
+using BookAway.Application.Dtos;
 using BookAway.Application.Dtos.Ciudad;
-using BookAway.Application.Interfaces.Generic;
+using BookAway.Application.Interfaces.Services;
 using BookAway.Domain.Entities;
+using BookAway.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookAway.Controllers
@@ -10,33 +12,24 @@ namespace BookAway.Controllers
     [ApiController]
     public class CiudadController : ControllerBase
     {
-        private readonly IUnityOfWork _unityOfWork;
+        private readonly ICiudadServices _services;
 
-        public CiudadController(IUnityOfWork unityOfWork)
+        public CiudadController(ICiudadServices services)
         {
-            _unityOfWork = unityOfWork;
+            _services = services;
         }
 
         [HttpPost]
-        public IActionResult Create(AddCiudadDto data)
+        public async Task<IActionResult> Create(AddCiudadDto data)
         {
-            var ciudad = new Ciudad
-            {
-                Descripcion = data.Descripcion,
-                IdProvincia = data.IdProvincia
-            };
-
-            _unityOfWork.CiudadRepository.Add(ciudad);
-            _unityOfWork.Complete();
-
-            return Ok(new ApiResponseDto<string>("Ciudad creado correctamente"));
+            return Ok(await _services.Create(data));
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAll()
         {
-            var response = _unityOfWork.CiudadRepository.GetAll();
-            return Ok(new ApiResponseDto<IEnumerable<Ciudad>>(response));
+            var response = await _services.GetAll();
+            return Ok(new ApiResponseDto<List<Ciudad>>(response));
         }
     }
 }

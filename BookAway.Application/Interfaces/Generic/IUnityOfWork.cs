@@ -1,18 +1,19 @@
 ﻿
 
 using BookAway.Application.Interfaces.Repositories;
+using BookAway.Domain.Entities;
 
 namespace BookAway.Application.Interfaces.Generic
 {
-    public interface IUnityOfWork
+    public interface IUnityOfWork : IDisposable
     {
-        ISexoRepository sexoRepository { get; }
+        IBaseRepository<Sexo> SexoRepository { get; }
+        IBaseRepository<Pais> PaisRepository { get; }
+        IBaseRepository<Ciudad> CiudadRepository { get; }
+        IBaseRepository<Provincia> ProvinciaRepository { get; }
         IHotelRepository HotelRepository { get; }
-        IPaisRepository PaisRepository { get; }
-        ICiudadRepository CiudadRepository { get; }
-        IProvinciaRepository ProvinciaRepository { get; }
 
-        int Complete();
-        void Dispose();
+        Task Commit();
+
     }
 }

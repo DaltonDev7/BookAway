@@ -1,10 +1,8 @@
-﻿using BookAway.Application.Dtos.Sexo;
-using BookAway.Application.Dtos;
-using BookAway.Application.Interfaces.Generic;
-using BookAway.Domain.Entities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using BookAway.Application.Dtos;
 using BookAway.Application.Dtos.Pais;
+using BookAway.Application.Interfaces.Services;
+using BookAway.Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BookAway.Controllers
 {
@@ -12,32 +10,24 @@ namespace BookAway.Controllers
     [ApiController]
     public class PaisController : ControllerBase
     {
-        private readonly IUnityOfWork _unityOfWork;
+        private readonly IPaisServices _paisServices;
 
-        public PaisController(IUnityOfWork unityOfWork)
+        public PaisController(IPaisServices paisServices)
         {
-            _unityOfWork = unityOfWork;
+            _paisServices = paisServices;
         }
 
         [HttpPost]
-        public IActionResult Create(AddPaisDto data)
+        public async Task<IActionResult> Create(AddPaisDto data)
         {
-            var pais = new Pais
-            {
-                Descripcion = data.Descripcion,
-            };
-
-            _unityOfWork.PaisRepository.Add(pais);
-            _unityOfWork.Complete();
-
-            return Ok(new ApiResponseDto<string>("Pais creado correctamente"));
+            return Ok(await _paisServices.Create(data));
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> GetAll()
         {
-            var response = _unityOfWork.PaisRepository.GetAll();
-            return Ok(new ApiResponseDto<IEnumerable<Pais>>(response));
+           var response = await _paisServices.GetAll();
+           return Ok(new ApiResponseDto<List<Pais>>(response));
         }
 
     }

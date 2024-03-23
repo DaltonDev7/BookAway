@@ -1,11 +1,7 @@
-﻿using BookAway.Application.Dtos.Pais;
-using BookAway.Application.Dtos;
-using BookAway.Application.Interfaces.Generic;
+﻿using BookAway.Application.Dtos;
+using BookAway.Application.Interfaces.Services;
 using BookAway.Domain.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using BookAway.Infrastructure.Repositories.Generic;
-using BookAway.Application.Interfaces;
 
 namespace BookAway.Controllers
 {
@@ -13,12 +9,10 @@ namespace BookAway.Controllers
     [ApiController]
     public class HotelController : ControllerBase
     {
-        private readonly IUnityOfWork _unityOfWork;
         private readonly IHotelServices _hotelServices;
 
-        public HotelController(IUnityOfWork unityOfWork, IHotelServices hotelServices)
+        public HotelController(IHotelServices hotelServices)
         {
-            _unityOfWork = unityOfWork;
             _hotelServices = hotelServices;
         }
 
@@ -29,10 +23,10 @@ namespace BookAway.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var response = _unityOfWork.PaisRepository.GetAll();
-            return Ok(new ApiResponseDto<IEnumerable<Pais>>(response));
+            var response = await _hotelServices.GetAll();
+            return Ok(new ApiResponseDto<List<Hotel>>(response));
         }
 
     }

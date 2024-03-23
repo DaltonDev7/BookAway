@@ -3,10 +3,11 @@
 using AutoMapper;
 using BookAway.Application.Dtos;
 using BookAway.Application.Exception;
-using BookAway.Application.Interfaces;
 using BookAway.Application.Interfaces.Generic;
 using BookAway.Application.Interfaces.Repositories;
+using BookAway.Application.Interfaces.Services;
 using BookAway.Domain.Entities;
+using BookAway.Domain.Enums;
 
 namespace BookAway.Application.Services
 {
@@ -33,10 +34,15 @@ namespace BookAway.Application.Services
 
 
             var newHotel = _mapper.Map<Hotel>(data);
-            _hotelRepository.Add(newHotel);
-            _unityOfWork.Complete();
+            _hotelRepository.Insert(newHotel);
+            _unityOfWork.Commit();
 
-            return new ApiResponseDto<string>("Hotel creado correctamente");
+            return new ApiResponseDto<string>(ResponseApiEnum.ItemCreated);
+        }
+
+        public async Task<List<Hotel>> GetAll()
+        {
+            return (await _hotelRepository.GetAll()).ToList();
         }
 
 

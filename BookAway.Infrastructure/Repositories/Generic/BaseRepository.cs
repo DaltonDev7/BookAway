@@ -1,93 +1,72 @@
 ﻿using BookAway.Application.Interfaces.Generic;
+using BookAway.Domain.Entities.Common;
 using BookAway.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq.Expressions;
-
 
 namespace BookAway.Infrastructure.Repositories.Generic
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
+    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
     {
         protected readonly BookAwayContext _dbContext;
         protected readonly DbSet<TEntity> _dbSet;
-        public BaseRepository(BookAwayContext context)
+        public BaseRepository(BookAwayContext dbContext)
         {
-            this._dbContext = context;
-            _dbSet = this._dbContext.Set<TEntity>();
+            _dbContext = dbContext;
+            _dbSet = _dbContext.Set<TEntity>();
         }
 
-        public void Add(TEntity entity)
+        public async Task<IEnumerable<TEntity>> GetAll(Expression<Func<TEntity, bool>> filter = null, string includeProperties = "", int? take = null, int? skip = null)
         {
-            var entry = _dbContext.Entry(entity);
-            if (entry.State == EntityState.Detached)
+            IQueryable<TEntity> result = _dbSet;
+
+            if (filter != null)
+                result = result.Where(filter);
+
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                result = result.Include(includeProperty);
+
+            if (take.HasValue && skip.HasValue)
             {
-                _dbContext.Set<TEntity>().Add(entity);
+                var pageIndex = skip.Value;
+                var pageSize = take.Value;
+                result = result.Skip((pageIndex - 1) * pageSize).Take(pageSize);
             }
-            else
-            {
-                entry.State = EntityState.Modified;
-            }
+
+            return await result.ToListAsync();
         }
 
-        public void AddAll(IEnumerable<TEntity> entities)
+        public async Task<TEntity> Get(Expression<Func<TEntity, bool>> filter, string includeProperties = "")
         {
-            foreach (var entity in entities)
-            {
-                Add(entity);
-            }
+            IQueryable<TEntity> result = _dbSet;
+
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                result = result.Include(includeProperty);
+
+            return await result.FirstOrDefaultAsync(filter);
         }
 
-        public TEntity Get(Expression<Func<TEntity, bool>> predicate)
+        public async Task Delete(int Id)
         {
-            return _dbContext.Set<TEntity>().Where(predicate).FirstOrDefault();
+            var entity = await _dbSet.FirstOrDefaultAsync(x => x.Id == Id) ?? throw new Exception("Entity not found.");
+            _dbSet.Remove(entity);
         }
 
-        public TEntity Get(int id)
+        public async Task Insert(TEntity entity)
         {
-            return _dbContext.Set<TEntity>().Find(id);
-        }
-
-        public IEnumerable<TEntity> GetAll()
-        {
-            return _dbContext.Set<TEntity>().ToList();
-        }
-
-        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate)
-        {
-            return _dbContext.Set<TEntity>().Where(predicate).ToList();
-        }
-
-        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return await _dbContext.Set<TEntity>().Where(predicate).FirstOrDefaultAsync();
-        }
-
-        public async Task<TEntity> GetAsync(int id)
-        {
-            return await _dbContext.Set<TEntity>().FindAsync(id);
-        }
-
-        public void Remove(TEntity entity)
-        {
-            var entry = _dbContext.Entry(entity);
-            if (entry.State == EntityState.Detached)
-            {
-                _dbContext.Set<TEntity>().Attach(entity);
-            }
-            _dbContext.Entry<TEntity>(entity).State = EntityState.Deleted;
-        }
-
-        public void RemoveAll(IEnumerable<TEntity> entities)
-        {
-            foreach (var entity in entities)
-            {
-                Remove(entity);
-            }
+            entity.FechaCreacion = DateTime.Now;
+            await _dbSet.AddAsync(entity);
         }
 
         public void Update(TEntity entity)
         {
-            _dbContext.Update(entity);
+            entity.FechaModificacion = DateTime.Now;
+
+            if (_dbContext.Entry(entity).State == EntityState.Detached)
+                _dbContext.Attach(entity);
+
+            _dbSet.Update(entity);
         }
     }
 
