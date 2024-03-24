@@ -1,4 +1,6 @@
 ﻿
+using BookAway.Domain.Entities;
+
 namespace BookAway.Application.Dtos.Auth
 {
     public class UserResponseSignInDto
@@ -6,6 +8,8 @@ namespace BookAway.Application.Dtos.Auth
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
         public int IdSexo { get; set; }
+
+        public string Rol { get; set; }
 
     }
 }

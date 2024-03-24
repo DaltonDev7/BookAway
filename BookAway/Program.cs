@@ -1,4 +1,5 @@
 using BookAway;
+using BookAway.Application.Mapping;
 using BookAway.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,7 +27,7 @@ builder.Services.AddCors(options =>
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(typeof(AutoMapping));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

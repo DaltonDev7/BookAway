@@ -4,8 +4,8 @@ using BookAway.Domain.Constants;
 using BookAway.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Net;
-using Microsoft.Extensions.Configuration;
 using BookAway.Application.Interfaces.Services;
+using System.Security.Claims;
 
 namespace BookAway.Application.Services
 {
@@ -15,7 +15,7 @@ namespace BookAway.Application.Services
         private readonly SignInManager<Usuario> _signInManager;
         private readonly ITokenServices _tokenServices;
 
-        public AuthServices(UserManager<Usuario> userManager, SignInManager<Usuario> signInManager, IConfiguration configuration, ITokenServices tokenServices)
+        public AuthServices(UserManager<Usuario> userManager, SignInManager<Usuario> signInManager, ITokenServices tokenServices)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -33,6 +33,15 @@ namespace BookAway.Application.Services
 
             var token = await _tokenServices.GenerateToken(user);
 
+            //obtenemos los roles del usuario
+            var userRoles = await _userManager.GetRolesAsync(user);
+            string rolUser = "";
+
+            foreach (var userRole in userRoles)
+            {
+                rolUser = userRole;
+            }
+
             if (result.Succeeded && token != null)
             {
                 return new SignInResponseDto()
@@ -42,7 +51,8 @@ namespace BookAway.Application.Services
                     {
                         Apellidos = user.Apellidos,
                         Nombres = user.Nombres,
-                        IdSexo = user.IdSexo
+                        IdSexo = user.IdSexo,
+                        Rol = rolUser
                     },
                     token = token
                 };
@@ -63,9 +73,10 @@ namespace BookAway.Application.Services
                 Nombres = payload.Nombres,
                 Apellidos = payload.Apellidos,
                 Email = payload.Email,
+                Contacto = payload.Contacto,
                 IdSexo = payload.IdSexo,
                 Identificacion = payload.Identificacion,
-                UserName = payload.Username,
+                UserName = payload.Nombres+payload.Apellidos,
                 Estado = true
             };
 

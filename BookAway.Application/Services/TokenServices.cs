@@ -20,9 +20,41 @@ namespace BookAway.Application.Services
             _userManager = userManager;
         }
 
+
+        public async Task<string> GenerateTokenHotel(Hotel hotel)
+        {
+            string secretValue = _configuration["JwtSettings:JwtKey"];
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretValue));
+            var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+            //creamos los claims para crear el token
+            var utcNow = DateTime.UtcNow.AddMinutes(-240);
+            var claims = new List<Claim>
+            {
+                    new Claim(ClaimTypes.Name, hotel.Descripcion),
+                    new Claim(ClaimTypes.Email,hotel.Email),
+            };
+
+            //creamos el token
+            var jwt = new JwtSecurityToken(
+                 signingCredentials: signingCredentials,
+                 claims: claims,
+                 notBefore: utcNow,
+                 expires: DateTime.Now.AddHours(12),
+                 issuer: "http://localhost:4200",
+                 audience: "http://localhost:4200"
+             );
+
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+            return tokenString;
+        }
+
+
+
         public async Task<string> GenerateToken(Usuario usuario)
         {
-            var secretValue = _configuration.GetSection("JwtSettings:Jwt").Value;
+            string secretValue = _configuration["JwtSettings:JwtKey"];
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretValue));
             var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 

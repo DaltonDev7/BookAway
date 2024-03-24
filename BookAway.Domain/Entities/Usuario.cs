@@ -10,6 +10,7 @@ namespace BookAway.Domain.Entities
         public string Apellidos { get; set; } = null!;
         public int IdSexo { get; set; }
         public string Identificacion { get; set; } = null!;
+        public string Contacto { get; set; }
         public bool Estado { get; set; }
 
         public DateTime FechaCreacion { get; set; } = DateTime.Now;

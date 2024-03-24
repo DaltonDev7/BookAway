@@ -4,6 +4,7 @@ using BookAway.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookAway.Infrastructure.Migrations
 {
     [DbContext(typeof(BookAwayContext))]
-    partial class BookAwayContextModelSnapshot : ModelSnapshot
+    [Migration("20240324001825_addContactoHotel")]
+    partial class addContactoHotel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,9 +97,6 @@ namespace BookAway.Infrastructure.Migrations
                     b.Property<int?>("IdProvincia")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdRol")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -119,8 +119,6 @@ namespace BookAway.Infrastructure.Migrations
                     b.HasIndex("IdPais");
 
                     b.HasIndex("IdProvincia");
-
-                    b.HasIndex("IdRol");
 
                     b.HasIndex("RNC")
                         .IsUnique();
@@ -475,16 +473,9 @@ namespace BookAway.Infrastructure.Migrations
                         .HasForeignKey("IdProvincia")
                         .OnDelete(DeleteBehavior.ClientCascade);
 
-                    b.HasOne("BookAway.Domain.Entities.Rol", "Rol")
-                        .WithMany("Hoteles")
-                        .HasForeignKey("IdRol")
-                        .OnDelete(DeleteBehavior.ClientCascade);
-
                     b.Navigation("Pais");
 
                     b.Navigation("Provincia");
-
-                    b.Navigation("Rol");
                 });
 
             modelBuilder.Entity("BookAway.Domain.Entities.Provincia", b =>
@@ -585,8 +576,6 @@ namespace BookAway.Infrastructure.Migrations
 
             modelBuilder.Entity("BookAway.Domain.Entities.Rol", b =>
                 {
-                    b.Navigation("Hoteles");
-
                     b.Navigation("RolesUsuarios");
                 });
 

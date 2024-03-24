@@ -25,6 +25,11 @@ namespace BookAway.Infrastructure.EntityConfigurations
                   .HasForeignKey(h => h.IdProvincia)
                   .OnDelete(DeleteBehavior.ClientCascade);
 
+            builder.HasOne(h =>h.Rol)
+                   .WithMany(r => r.Hoteles)
+                   .HasForeignKey(h => h.IdRol)
+                   .OnDelete(DeleteBehavior.ClientCascade);
+
         }
     }
 }

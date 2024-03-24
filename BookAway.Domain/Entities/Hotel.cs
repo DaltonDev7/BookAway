@@ -11,14 +11,16 @@ namespace BookAway.Domain.Entities
         public string RNC { get; set; }
         public string Email { get; set; }
         public string PassWord { get; set; }
-        public string Telefono { get; set; }
+        public string Contacto { get; set; }
         public double CalificacionPromedio { get; set; } = 0.0;
         public int IdPais { get; set; }
         public int? IdProvincia { get; set; }
+        public int? IdRol { get; set; }
 
 
 
         public Pais Pais { get; set; }
         public Provincia? Provincia { get; set; }
+        public Rol Rol { get; set; }
     }
 }
