@@ -35,9 +35,12 @@ namespace BookAway
             services.AddScoped<IPaisServices, PaisServices>();
             services.AddScoped<IProvinciaServices, ProvinciaServices>();
             services.AddScoped<ISexoServices, SexoServices>();
+            services.AddScoped<ITipoHabitacionServices, TipoHabitacionServices>();
+            services.AddScoped<IHabitacionServices, HabitacionServices>();
 
             //repository
             services.AddScoped<IHotelRepository, HotelRepository>();
+            services.AddScoped<IHabitacionRepository, HabitacionRepository>();
 
             //add identity
             services.AddIdentity<Usuario, Rol>( options =>

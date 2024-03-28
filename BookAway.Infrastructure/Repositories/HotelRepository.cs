@@ -14,7 +14,6 @@ namespace BookAway.Infrastructure.Repositories
 
         }
 
-
         public bool ValidateRNC(string rnc)
         {
             return _dbSet.Any(x => x.RNC == rnc);
@@ -24,7 +23,6 @@ namespace BookAway.Infrastructure.Repositories
         {
             return _dbSet.Any(y => y.Email == email);
         }
-
 
     }
 

@@ -8,6 +8,6 @@ namespace BookAway.Application.Interfaces.Services
     {
         ApiResponseDto<string> CreateHotel(AddUpdateHotelDto data);
         Task<SignInResponseHotelDto> SignIn(SignInHotelDto dto);
-        Task<List<Hotel>> GetAll();
+        Task<List<HotelListDto>> GetAll();
     }
 }

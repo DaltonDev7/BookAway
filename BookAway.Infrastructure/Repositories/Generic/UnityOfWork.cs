@@ -16,8 +16,10 @@ namespace BookAway.Infrastructure.Repositories.Generic
             BookAwayContext context,
             IBaseRepository<Sexo> sexoRepository,
             IBaseRepository<Pais> paisRepository,
+            IBaseRepository<TipoHabitacion> tipoHabitacionRepository,
             IBaseRepository<Ciudad> ciudadRepository,
             IBaseRepository<Provincia> provinciaRepository,
+            IHabitacionRepository habitacionRepository,
             IHotelRepository hotelRepository
             )
         {
@@ -27,6 +29,8 @@ namespace BookAway.Infrastructure.Repositories.Generic
             CiudadRepository = ciudadRepository;
             ProvinciaRepository = provinciaRepository;
             HotelRepository = hotelRepository;
+            TipoHabitacionRepository = tipoHabitacionRepository;
+            HabitacionRepository = habitacionRepository;
         }
 
         public IBaseRepository<Sexo> SexoRepository { get; }
@@ -38,6 +42,10 @@ namespace BookAway.Infrastructure.Repositories.Generic
         public IBaseRepository<Provincia> ProvinciaRepository { get; }
 
         public IHotelRepository HotelRepository { get; }
+
+        public IBaseRepository<TipoHabitacion> TipoHabitacionRepository { get; }
+
+        public IHabitacionRepository HabitacionRepository { get; }
 
         public async Task Commit()
         {

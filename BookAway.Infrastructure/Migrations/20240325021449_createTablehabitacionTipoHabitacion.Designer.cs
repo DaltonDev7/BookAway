@@ -4,6 +4,7 @@ using BookAway.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookAway.Infrastructure.Migrations
 {
     [DbContext(typeof(BookAwayContext))]
-    partial class BookAwayContextModelSnapshot : ModelSnapshot
+    [Migration("20240325021449_createTablehabitacionTipoHabitacion")]
+    partial class createTablehabitacionTipoHabitacion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,10 +76,10 @@ namespace BookAway.Infrastructure.Migrations
                     b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdHotel")
+                    b.Property<int>("IdHabitacion")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdTipoHabitacion")
+                    b.Property<int>("IdHotel")
                         .HasColumnType("int");
 
                     b.Property<string>("Numero")
@@ -90,10 +93,6 @@ namespace BookAway.Infrastructure.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdHotel");
-
-                    b.HasIndex("IdTipoHabitacion");
 
                     b.ToTable("Habitaciones", (string)null);
                 });
@@ -559,25 +558,6 @@ namespace BookAway.Infrastructure.Migrations
                     b.Navigation("Provincia");
                 });
 
-            modelBuilder.Entity("BookAway.Domain.Entities.Habitacion", b =>
-                {
-                    b.HasOne("BookAway.Domain.Entities.Hotel", "Hotel")
-                        .WithMany("Habitaciones")
-                        .HasForeignKey("IdHotel")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("BookAway.Domain.Entities.TipoHabitacion", "TipoHabitacion")
-                        .WithMany("Habitaciones")
-                        .HasForeignKey("IdTipoHabitacion")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("Hotel");
-
-                    b.Navigation("TipoHabitacion");
-                });
-
             modelBuilder.Entity("BookAway.Domain.Entities.Hotel", b =>
                 {
                     b.HasOne("BookAway.Domain.Entities.Ciudad", null)
@@ -689,11 +669,6 @@ namespace BookAway.Infrastructure.Migrations
                     b.Navigation("Hoteles");
                 });
 
-            modelBuilder.Entity("BookAway.Domain.Entities.Hotel", b =>
-                {
-                    b.Navigation("Habitaciones");
-                });
-
             modelBuilder.Entity("BookAway.Domain.Entities.Pais", b =>
                 {
                     b.Navigation("Hoteles");
@@ -718,11 +693,6 @@ namespace BookAway.Infrastructure.Migrations
             modelBuilder.Entity("BookAway.Domain.Entities.Sexo", b =>
                 {
                     b.Navigation("Usuarios");
-                });
-
-            modelBuilder.Entity("BookAway.Domain.Entities.TipoHabitacion", b =>
-                {
-                    b.Navigation("Habitaciones");
                 });
 
             modelBuilder.Entity("BookAway.Domain.Entities.Usuario", b =>

@@ -79,9 +79,11 @@ namespace BookAway.Application.Services
 
         }
 
-        public async Task<List<Hotel>> GetAll()
+        public async Task<List<HotelListDto>> GetAll()
         {
-            return (await _hotelRepository.GetAll()).ToList();
+            var response = (await _hotelRepository.GetAll()).ToList();
+            var hotelListDtos = _mapper.Map<List<HotelListDto>>(response);
+            return hotelListDtos;
         }
 
        

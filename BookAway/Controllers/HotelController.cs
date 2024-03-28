@@ -1,5 +1,4 @@
 ﻿using BookAway.Application.Dtos;
-using BookAway.Application.Dtos.Auth;
 using BookAway.Application.Dtos.Hotel;
 using BookAway.Application.Interfaces.Services;
 using BookAway.Domain.Entities;
@@ -38,7 +37,7 @@ namespace BookAway.Controllers
         public async Task<IActionResult> GetAll()
         {
             var response = await _hotelServices.GetAll();
-            return Ok(new ApiResponseDto<List<Hotel>>(response));
+            return Ok(new ApiResponseDto<List<HotelListDto>>(response));
         }
 
     }

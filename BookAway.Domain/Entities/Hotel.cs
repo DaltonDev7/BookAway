@@ -22,5 +22,7 @@ namespace BookAway.Domain.Entities
         public Pais Pais { get; set; }
         public Provincia? Provincia { get; set; }
         public Rol Rol { get; set; }
+
+        public ICollection<Habitacion> Habitaciones { get; set; } = null!;
     }
 }

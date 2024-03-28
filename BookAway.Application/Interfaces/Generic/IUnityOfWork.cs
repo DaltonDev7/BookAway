@@ -9,6 +9,8 @@ namespace BookAway.Application.Interfaces.Generic
     {
         IBaseRepository<Sexo> SexoRepository { get; }
         IBaseRepository<Pais> PaisRepository { get; }
+        IBaseRepository<TipoHabitacion> TipoHabitacionRepository { get; }
+        IHabitacionRepository HabitacionRepository { get; }
         IBaseRepository<Ciudad> CiudadRepository { get; }
         IBaseRepository<Provincia> ProvinciaRepository { get; }
         IHotelRepository HotelRepository { get; }
