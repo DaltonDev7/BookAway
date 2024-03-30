@@ -6,6 +6,6 @@ namespace BookAway.Domain.Constants
     {
         public static string Usuario = "USUARIO";
         public static string Hotel = "HOTEL";
-
+        public static string Administrador = "ADMINISTRADOR";
     }
 }

@@ -46,7 +46,7 @@ namespace BookAway.Application.Services
 
 
             var newHotel = _mapper.Map<Hotel>(data);
-            newHotel.IdRol = 2;
+            newHotel.IdRol = (int)RolEnum.HOTEL;
             newHotel.PassWord = BCrypt.Net.BCrypt.HashPassword(newHotel.PassWord);
             _hotelRepository.Insert(newHotel);
             _unityOfWork.Commit();

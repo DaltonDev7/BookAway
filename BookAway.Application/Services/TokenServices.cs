@@ -1,4 +1,5 @@
 ﻿using BookAway.Application.Interfaces.Services;
+using BookAway.Domain.Constants;
 using BookAway.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +34,7 @@ namespace BookAway.Application.Services
             {
                     new Claim(ClaimTypes.Name, hotel.Descripcion),
                     new Claim(ClaimTypes.Email,hotel.Email),
+                    new Claim(ClaimTypes.Role, RolesConstants.Hotel),
             };
 
             //creamos el token
@@ -73,7 +75,7 @@ namespace BookAway.Application.Services
             {
                 var rolesClaims = new List<Claim>
                     {
-                        new Claim("RoleName", userRole),
+                        new Claim(ClaimTypes.Role, userRole),
                     };
                 claims.AddRange(rolesClaims);
             }

@@ -2,6 +2,7 @@
 using BookAway.Application.Dtos.Pais;
 using BookAway.Application.Interfaces.Services;
 using BookAway.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookAway.Controllers
@@ -24,6 +25,7 @@ namespace BookAway.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles ="HOTEL")]
         public async Task<IActionResult> GetAll()
         {
            var response = await _paisServices.GetAll();
