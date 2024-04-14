@@ -4,7 +4,6 @@ using BookAway.Application.Interfaces.Generic;
 using BookAway.Application.Interfaces.Repositories;
 using BookAway.Domain.Entities;
 using BookAway.Infrastructure.Context;
-using Microsoft.EntityFrameworkCore;
 
 namespace BookAway.Infrastructure.Repositories.Generic
 {
@@ -19,7 +18,9 @@ namespace BookAway.Infrastructure.Repositories.Generic
             IBaseRepository<TipoHabitacion> tipoHabitacionRepository,
             IBaseRepository<Ciudad> ciudadRepository,
             IBaseRepository<Provincia> provinciaRepository,
+            IBaseRepository<EstadoReserva> estadoReservaRepository,
             IHabitacionRepository habitacionRepository,
+            IReservaRepository reservaRepository,
             IHotelRepository hotelRepository
             )
         {
@@ -29,6 +30,8 @@ namespace BookAway.Infrastructure.Repositories.Generic
             CiudadRepository = ciudadRepository;
             ProvinciaRepository = provinciaRepository;
             HotelRepository = hotelRepository;
+            ReservaRepository = reservaRepository;
+            EstadoReservaRepository = estadoReservaRepository;
             TipoHabitacionRepository = tipoHabitacionRepository;
             HabitacionRepository = habitacionRepository;
         }
@@ -46,6 +49,10 @@ namespace BookAway.Infrastructure.Repositories.Generic
         public IBaseRepository<TipoHabitacion> TipoHabitacionRepository { get; }
 
         public IHabitacionRepository HabitacionRepository { get; }
+
+        public IBaseRepository<EstadoReserva> EstadoReservaRepository { get; }
+
+        public IReservaRepository ReservaRepository { get; }
 
         public async Task Commit()
         {
