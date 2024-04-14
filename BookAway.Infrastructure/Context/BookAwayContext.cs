@@ -28,6 +28,8 @@ namespace BookAway.Infrastructure.Context
             builder.ApplyConfiguration(new HotelServicioConfiguration());
             builder.ApplyConfiguration(new HabitacionConfiguration());
             builder.ApplyConfiguration(new TipoHabitacionConfiguration());
+            builder.ApplyConfiguration(new EstadoReservaConfiguration());
+            builder.ApplyConfiguration(new ReservaConfiguration());
         }
 
 
@@ -35,7 +37,9 @@ namespace BookAway.Infrastructure.Context
         public DbSet<Ciudad> Ciudad { get; set; }
         public DbSet<Hotel> Hotel { get; set; }
         public DbSet<Pais> Pais { get; set; }
+        public DbSet<Reserva> Reserva { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<EstadoReserva> EstadoReserva { get; set; }
         public DbSet<Sexo> Sexo { get; set; }
         public DbSet<Rol> Rol { get; set; }
         public DbSet<Habitacion> Habitacion { get; set; }

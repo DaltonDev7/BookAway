@@ -18,5 +18,7 @@ namespace BookAway.Domain.Entities
 
         public ICollection<RolUsuario> RolesUsuarios { get; set; } = null!;
         public Sexo Sexo { get; set; } = null!;
+
+        public ICollection<Reserva> Reservas { get; set; } = null!;
     }
 }

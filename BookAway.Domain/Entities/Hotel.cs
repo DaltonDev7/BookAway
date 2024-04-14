@@ -24,5 +24,6 @@ namespace BookAway.Domain.Entities
         public Rol Rol { get; set; }
 
         public ICollection<Habitacion> Habitaciones { get; set; } = null!;
+        public ICollection<Reserva> Reservas { get; set; } = null!;
     }
 }

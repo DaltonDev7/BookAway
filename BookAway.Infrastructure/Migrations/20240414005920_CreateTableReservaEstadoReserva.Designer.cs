@@ -4,6 +4,7 @@ using BookAway.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookAway.Infrastructure.Migrations
 {
     [DbContext(typeof(BookAwayContext))]
-    partial class BookAwayContextModelSnapshot : ModelSnapshot
+    [Migration("20240414005920_CreateTableReservaEstadoReserva")]
+    partial class CreateTableReservaEstadoReserva
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -309,6 +312,12 @@ namespace BookAway.Infrastructure.Migrations
                     b.Property<DateTime>("FechaSalida")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("HabitacionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HotelId")
+                        .HasColumnType("int");
+
                     b.Property<int>("IdEstadoReserva")
                         .HasColumnType("int");
 
@@ -321,15 +330,16 @@ namespace BookAway.Infrastructure.Migrations
                     b.Property<int>("IdUsuario")
                         .HasColumnType("int");
 
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("IdEstadoReserva");
+                    b.HasIndex("HabitacionId");
 
-                    b.HasIndex("IdHabitacion");
+                    b.HasIndex("HotelId");
 
-                    b.HasIndex("IdHotel");
-
-                    b.HasIndex("IdUsuario");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Reserva", (string)null);
                 });
@@ -698,31 +708,23 @@ namespace BookAway.Infrastructure.Migrations
 
             modelBuilder.Entity("BookAway.Domain.Entities.Reserva", b =>
                 {
-                    b.HasOne("BookAway.Domain.Entities.EstadoReserva", "EstadoReserva")
-                        .WithMany("Reservas")
-                        .HasForeignKey("IdEstadoReserva")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BookAway.Domain.Entities.Habitacion", "Habitacion")
-                        .WithMany("Reservas")
-                        .HasForeignKey("IdHabitacion")
+                        .WithMany()
+                        .HasForeignKey("HabitacionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BookAway.Domain.Entities.Hotel", "Hotel")
-                        .WithMany("Reservas")
-                        .HasForeignKey("IdHotel")
+                        .WithMany()
+                        .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BookAway.Domain.Entities.Usuario", "Usuario")
-                        .WithMany("Reservas")
-                        .HasForeignKey("IdUsuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("EstadoReserva");
 
                     b.Navigation("Habitacion");
 
@@ -802,21 +804,9 @@ namespace BookAway.Infrastructure.Migrations
                     b.Navigation("Hoteles");
                 });
 
-            modelBuilder.Entity("BookAway.Domain.Entities.EstadoReserva", b =>
-                {
-                    b.Navigation("Reservas");
-                });
-
-            modelBuilder.Entity("BookAway.Domain.Entities.Habitacion", b =>
-                {
-                    b.Navigation("Reservas");
-                });
-
             modelBuilder.Entity("BookAway.Domain.Entities.Hotel", b =>
                 {
                     b.Navigation("Habitaciones");
-
-                    b.Navigation("Reservas");
                 });
 
             modelBuilder.Entity("BookAway.Domain.Entities.Pais", b =>
@@ -852,8 +842,6 @@ namespace BookAway.Infrastructure.Migrations
 
             modelBuilder.Entity("BookAway.Domain.Entities.Usuario", b =>
                 {
-                    b.Navigation("Reservas");
-
                     b.Navigation("RolesUsuarios");
                 });
 #pragma warning restore 612, 618

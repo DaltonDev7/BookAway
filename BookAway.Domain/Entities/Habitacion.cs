@@ -18,5 +18,7 @@ namespace BookAway.Domain.Entities
         public TipoHabitacion TipoHabitacion { get; set; }
         public Hotel Hotel { get; set; }
 
+        public ICollection<Reserva> Reservas { get; set; } = null!;
+
     }
 }
